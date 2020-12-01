@@ -56,7 +56,7 @@ const createItemTodo = (id, titleItem) => {
   const btnItem = document.createElement('button');
 
   itemToDo.classList.add('list-group-item', 'p-0', 'mb-3', 'border-0');
-  btnItem.classList.add('btn', 'btn-light', 'btn-block', 'border-info', 'rounded-pill');
+  btnItem.classList.add('list-item', 'btn', 'btn-light', 'btn-block', 'border-info', 'rounded-pill');
   btnItem.textContent = titleItem;
   btnItem.id = id;
   itemToDo.append(btnItem);
@@ -68,7 +68,7 @@ const addTodoItem = (todoData, listTodo, nameTodo, descriptionTodo) => {
   const id = `todo${(+new Date()).toString(16)}`;
   const itemTodo = createItemTodo(id, nameTodo);
 
-  todoData.push({id, nameTodo, descriptionTodo});
+  todoData.push({id, nameTodo, descriptionTodo, success: false});
 
   listTodo.append(itemTodo);
   console.log(todoData);
@@ -158,6 +158,15 @@ const initToDo = (selector, titleToDo) => {
       if (!formTodo.textArea.value) {
         formTodo.textArea.classList.add('is-invalid');
       }
+    }
+  });
+
+  listTodo.addEventListener('click', event => {
+    const target = event.target;
+    console.log(1);
+    if (target.classList.contains('list-item')) {
+      const item = todoData.find(elem => elem.id = target.id);
+      modal.showModal(item.nameTodo, item.descriptionTodo);
     }
   });
 
